@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RaniGo Admin Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-orange: #FF7F00;
+      --secondary-orange: #FFA500;
+      --dark-blue: #00264D;
+      --light-blue: #004080;
+      --light-gray: #f5f5f5;
+      --medium-gray: #e0e0e0;
+      --text-dark: #333;
+      --text-light: #fff;
+      --error-red: #e74c3c;
+      --success-green: #2ecc71;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--dark-blue), var(--light-blue));
+      color: var(--text-dark);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M0 0L100 100M100 0L0 100" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></svg>');
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
+    .login-container {
+      width: 420px;
+      max-width: 90%;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-header {
+      background: linear-gradient(135deg, var(--dark-blue), var(--light-grays));
+      color: white;
+      padding: 35px 25px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-header::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background: white;
+      border-radius: 50% 50% 0 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+
+    
+    .login-subtitle {
+      opacity: 0.9;
+      font-size: 15px;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+      margin-top: 5px;
+      color: var(--dark-blue);
+      font-weight: bold;
+    }
+
+    .login-body {
+      padding: 35px;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+      position: relative;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 500;
+      color: var(--text-dark);
+      font-size: 15px;
+    }
+
+    .input-group {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      top: 50%;
+      left: 14px;
+      transform: translateY(-50%);
+      color: var(--medium-gray);
+      transition: color 0.3s;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 14px 14px 14px 42px;
+      border: 1px solid var(--medium-gray);
+      border-radius: 8px;
+      font-size: 15px;
+      transition: all 0.3s;
+      background-color: var(--light-gray);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-orange);
+      background-color: white;
+      box-shadow: 0 0 0 3px rgba(255, 127, 0, 0.15);
+    }
+
+    .form-control:focus+.input-icon {
+      color: var(--primary-orange);
+    }
+
+    .remember-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      font-size: 14px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+    }
+
+    .checkbox-group input {
+      margin-right: 8px;
+      accent-color: var(--primary-orange);
+    }
+
+    .forgot-link {
+      color: var(--light-blue);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .forgot-link:hover {
+      color: var(--primary-orange);
+      text-decoration: underline;
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 6px rgba(255, 127, 0, 0.15);
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 10px rgba(255, 127, 0, 0.2);
+    }
+
+    .btn-login:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(255, 127, 0, 0.1);
+    }
+
+    .btn-login::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+
+    .btn-login:hover::after {
+      left: 100%;
+    }
+
+    .error-message {
+      background-color: rgba(231, 76, 60, 0.1);
+      color: var(--error-red);
+      padding: 12px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      text-align: center;
+      border-radius: 6px;
+      border-left: 4px solid var(--error-red);
+      animation: shake 0.5s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      display: none;
+    }
+
+    .error-message i {
+      margin-right: 8px;
+      font-size: 16px;
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      10%,
+      30%,
+      50%,
+      70%,
+      90% {
+        transform: translateX(-5px);
+      }
+
+      20%,
+      40%,
+      60%,
+      80% {
+        transform: translateX(5px);
+      }
+    }
+
+    .footer-text {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 13px;
+      color: #666;
+    }
+
+    .footer-text a {
+      color: var(--primary-orange);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer-text a:hover {
+      text-decoration: underline;
+    }
+    .logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.logo-img {
+  height: 120px; /* Adjust based on your logo's aspect ratio */
+  width: auto;
+  max-width: 100%;
+}
+
+    @media (max-width: 480px) {
+      .login-container {
+        max-width: 95%;
+      }
+
+      .login-body {
+        padding: 25px 20px;
+      }
+
+      .login-header {
+        padding: 25px 15px;
+      }
+
+      .logo-img {
+    height: 80px;
+  }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-container">
+    <div class="login-header">
+      <div class="logo">
+        <!-- Single logo image that includes both icon and text -->
+        <img src="logo.jpg.png" alt="RaniGo Logo" class="logo-img">
+        </div>
+      <div class="login-subtitle">Admin Dashboard Access</div>
+    </div>
+
+    <div class="login-body">
+      <div id="error" class="error-message">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>Invalid email or password</span>
+      </div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <div class="input-group">
+            <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+            <i class="input-icon fas fa-envelope"></i>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <div class="input-group">
+            <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password"
+              required>
+            <i class="input-icon fas fa-lock"></i>
+          </div>
+        </div>
+
+        <div class="remember-flex">
+          <div class="checkbox-group">
+            <input type="checkbox" id="remember" name="remember">
+            <label for="remember">Remember me</label>
+          </div>
+          
+        </div>
+
+        <button type="submit" class="btn-login">
+          Sign In <i class="fas fa-sign-in-alt" style="margin-left: 8px;"></i>
+        </button>
+      </form>
+
+      <div class="footer-text">
+        &copy; <span id="currentYear"></span> RaniGo Admin System 
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Set current year in footer
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Focus on email field when page loads
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('email').focus();
+    });
+
+    // Subtle animation effect on input fields
+    const inputs = document.querySelectorAll('.form-control');
+    inputs.forEach(input => {
+      input.addEventListener('focus', function () {
+        this.parentElement.style.transform = 'translateY(-2px)';
+      });
+
+      input.addEventListener('blur', function () {
+        this.parentElement.style.transform = 'translateY(0)';
+      });
+    });
+
+    // Form submission handler
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      login();
+    });
+  </script>
+  <script type="module">
+    // Firebase imports
+    import {
+      initializeApp
+    } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword
+    } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBRbRm4b1Un7vI4GkW1F-k8IiPRBTK737o",
+      authDomain: "final-b9978.firebaseapp.com",
+      projectId: "final-b9978",
+      storageBucket: "final-b9978.appspot.com",
+      messagingSenderId: "915317228274",
+      appId: "1:915317228274:web:6db702d37759d74d4d066b",
+      measurementId: "G-VVH5GXQ3RC"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Login function - making it globally accessible
+    window.login = function () {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const errorElement = document.getElementById('error');
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Check for admin
+          if (email === "admin@ranigo.com" && password === "admin123") {
+            window.location.href = "admin.html";
+          } else {
+            window.location.href = "home.html"; // or user.html, dashboard.html, etc.
+          }
+        })
+        .catch((error) => {
+          errorElement.style.display = "flex";
+          errorElement.querySelector('span').textContent = "Login failed: " + error.message;
+        });
+    }
+  </script>
+</body>
+
+</html>
